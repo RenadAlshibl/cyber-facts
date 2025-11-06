@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>حقائق سايبر عشوائية — يتحدث كل 15 ثانية</title>
+  <title>Cyber Tips & Basics</title>
   <style>
     body{
       font-family: "Segoe UI", Tahoma, Arial, sans-serif;
@@ -18,71 +18,121 @@
       box-sizing:border-box;
     }
     .card{
-      width:min(760px,95%);
+      width:min(820px,95%);
       background:rgba(255,255,255,0.03);
-      border-radius:12px;
-      padding:28px;
-      box-shadow:0 8px 30px rgba(0,0,0,0.6);
-      text-align:right;
+      border-radius:16px;
+      padding:34px 28px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.55);
+      text-align:center;
     }
-    h1{ margin:0 0 10px 0; font-size:20px; }
-    p.fact{
-      font-size:18px;
-      line-height:1.5;
-      margin:16px 0 0;
-      min-height:72px;
-      transition:opacity .6s ease, transform .6s ease;
+    h1{ margin:0 0 8px 0; font-size:22px; letter-spacing:.3px; }
+    .meta{ font-size:13px; color:rgba(255,255,255,0.6); margin-top:10px;}
+    .fact{
+      font-size:20px;
+      line-height:1.7;
+      margin:18px 0 0;
+      min-height:92px;
+      transition:opacity .55s ease, transform .55s ease;
       opacity:1;
+      text-align:center;
     }
-    .meta{ font-size:13px; color:rgba(255,255,255,0.6); margin-top:12px;}
     .fade-out{ opacity:0; transform:translateY(-6px); }
+    .badge{
+      display:inline-block;
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      margin-bottom:8px;
+      opacity:.9;
+    }
+    .badge-awareness{ background:#163a66; color:#b9dcff; }
+    .badge-domain{    background:#3a1f5f; color:#e3c8ff; }
+    @media (max-width:520px){
+      .fact{ font-size:18px; min-height:84px; }
+      h1{ font-size:19px; }
+    }
   </style>
 </head>
 <body>
   <div class="card" role="main" aria-live="polite">
-    <h1>معلومات سَايبِر عشوائية</h1>
-    <p id="fact" class="fact">جاري التحميل...</p>
-    <div class="meta">تتحدّث كل <strong>15 ثانية</strong>. امسح كود الـ QR لفتح هذه الصفحة.</div>
+    <h1>Cyber Tips & Basics</h1>
+    <div id="badge" class="badge badge-awareness">💡 Awareness</div>
+    <p id="fact" class="fact">Loading…</p>
+    <div class="meta">يتجدد المحتوى تلقائيًا كل <strong>10 ثوانٍ</strong>.</div>
   </div>
 
   <script>
-    const facts = [
-      "أكثر هجوم سيبراني شائع هو هجوم الهندسة الاجتماعية (Social Engineering).",
-      "الـ Ransomware يقوم بتشفير ملفات الضحية ثم يطلب فدية لفك التشفير.",
-      "تحديثات النظام تقلل من فرص استغلال الثغرات.",
-      "استخدام المصادقة الثنائية (2FA) يقلل كثيرًا من خطر سرقة الحساب.",
-      "هجمات الـ Phishing تستخدم رسائل تبدو رسمية لخداع المستخدم.",
-      "شبكات الواي-فاي العامة غير الآمنة قد تسمح للمهاجمين بالتنصت على بياناتك.",
-      "تسجيل الدخول المتكرر من أماكن مختلفة قد يكون علامة على حساب مخترق.",
-      "النسخ الاحتياطية المنتظمة تقلل الخسائر عند هجمات الفدية.",
-      "فحص الروابط قبل الضغط عليها يساعد في كشف الروابط المزيفة.",
-      "تشفير الاتصالات عبر HTTPS يمنع التنصت على البيانات أثناء النقل."
+    const items = [
+      {type:'awareness', text:"استخدم كلمات مرور قوية لا تقل عن 12 حرفًا وتضم أحرفًا وأرقامًا ورموزًا."},
+      {type:'awareness', text:"لا تستخدم نفس كلمة المرور لأكثر من حساب — اختر كلمات مختلفة لكل خدمة."},
+      {type:'awareness', text:"فعّل التحقق بخطوتين (2FA) لحماية حساباتك من الاختراق."},
+      {type:'awareness', text:"تحقق من أن الموقع يبدأ بـ https قبل إدخال بياناتك البنكية."},
+      {type:'awareness', text:"احذر من روابط الرسائل العاجلة التي تطلب تحديث بياناتك أو دفع مبالغ مالية."},
+      {type:'awareness', text:"حدّث نظام التشغيل والتطبيقات بانتظام لسد الثغرات الأمنية."},
+      {type:'awareness', text:"لا تحفّظ كلمات المرور في الملاحظات أو الصور على هاتفك."},
+      {type:'awareness', text:"استخدم مدير كلمات مرور موثوق لتنظيم كلماتك القوية بسهولة."},
+      {type:'awareness', text:"خذ نسخة احتياطية من ملفاتك المهمة بشكل دوري (سحابة + قرص خارجي)."},
+      {type:'awareness', text:"تجنب تحميل التطبيقات من خارج المتجر الرسمي."},
+      {type:'awareness', text:"راجع صلاحيات التطبيقات؛ لا تمنح صلاحيات لا حاجة لها مثل الموقع أو الكاميرا."},
+      {type:'awareness', text:"عند الشراء عبر الإنترنت، استخدم بطاقة مخصصة للمشتريات وحدّ من صلاحياتها."},
+      {type:'awareness', text:"لا تضغط على إعلانات تقول إن جهازك مصاب — غالبًا تكون خادعة."},
+      {type:'awareness', text:"تحقق من بريد المرسل وعنوان الرابط قبل النقر — التزييف شائع جدًا."},
+      {type:'awareness', text:"استخدم VPN في الشبكات العامة لتقليل خطر التنصت."},
+      {type:'awareness', text:"احذف الحسابات القديمة غير المستخدمة لتقليل المخاطر."},
+      {type:'awareness', text:"راقب إشعارات البنك والبريد لأي نشاط غير معتاد وتصرّف سريعًا."},
+      {type:'awareness', text:"لا تشارك رموز التحقق المؤقتة (OTP) مع أي شخص إطلاقًا."},
+      {type:'awareness', text:"علّم الأطفال عدم مشاركة الصور والبيانات الشخصية مع الغرباء على الإنترنت."},
+      {type:'awareness', text:"قبل بيع جهازك، اعمل تهيئة كاملة (Factory Reset) وتسجيل خروج من كل الحسابات."},
+      {type:'domain', text:"🔐 SOC: مركز عمليات الأمان يراقب التهديدات ويستجيب للحوادث على مدار الساعة."},
+      {type:'domain', text:"🔐 GRC: الحوكمة والمخاطر والامتثال — سياسات، تقييم مخاطر، والتزام بالمعايير."},
+      {type:'domain', text:"🔐 Red Team: فريق يحاكي المهاجمين لاختبار الدفاعات عمليًا."},
+      {type:'domain', text:"🔐 Blue Team: فريق الدفاع والمراقبة والتحليل لصد الهجمات."},
+      {type:'domain', text:"🔐 DFIR: الاستجابة للحوادث والتحليل الجنائي الرقمي لمعرفة ماذا حدث وكيف."},
+      {type:'domain', text:"🔐 Threat Intelligence: جمع وتحليل معلومات عن المهاجمين والتكتيكات المتوقعة."},
+      {type:'domain', text:"🔐 Penetration Testing: اختبار اختراق منظّم لاكتشاف الثغرات قبل استغلالها."},
+      {type:'domain', text:"🔐 Cloud Security: حماية البيئات السحابية وخدمات مثل AWS وAzure."},
+      {type:'domain', text:"🔐 Application Security: تأمين تطبيقات الويب والموبايل عبر مراجعات واختبارات ثابتة/ديناميكية."},
+      {type:'domain', text:"🔐 IAM: إدارة الهويات والصلاحيات لضمان أقل امتياز ممكن (Least Privilege)."}
     ];
 
-    let currentIndex = -1;
     const factEl = document.getElementById('fact');
+    const badgeEl = document.getElementById('badge');
+    let currentIndex = -1;
 
-    function showRandomFact() {
-      let next;
-      if (facts.length === 1) next = 0;
-      else {
-        do {
-          next = Math.floor(Math.random() * facts.length);
-        } while (next === currentIndex);
+    function pickNewIndex(){
+      if(items.length === 1) return 0;
+      let i;
+      do { i = Math.floor(Math.random()*items.length); }
+      while(i === currentIndex);
+      return i;
+    }
+
+    function renderItem(item){
+      if(item.type === 'awareness'){
+        badgeEl.textContent = '💡 Awareness';
+        badgeEl.className = 'badge badge-awareness';
+      }else{
+        badgeEl.textContent = '🔐 Domain';
+        badgeEl.className = 'badge badge-domain';
       }
+      factEl.textContent = item.text;
+    }
+
+    function showRandom(){
+      const next = pickNewIndex();
       currentIndex = next;
       factEl.classList.add('fade-out');
-      setTimeout(() => {
-        factEl.textContent = facts[currentIndex];
+      badgeEl.classList.add('fade-out');
+      setTimeout(()=>{
+        renderItem(items[currentIndex]);
         factEl.classList.remove('fade-out');
-      }, 600);
+        badgeEl.classList.remove('fade-out');
+      }, 550);
     }
 
-    function init() {
-      showRandomFact();
-      setInterval(showRandomFact, 15000);
-    }
-    init();
+    renderItem(items[0]);
+    setTimeout(showRandom, 200);
+    setInterval(showRandom, 10000);
   </script>
 </body>
 </html>
