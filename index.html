@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cyber Tips & Basics</title>
   <style>
-    :root { --bg1:#08060b; --bg2:#130a22; --bg3:#210f3c; --card:#ffffff0f; --text:#e9f1ff; --muted:#c0c9dacc; --glow:#ffffffc9; }
+    :root { 
+      --bg1:#08060b; --bg2:#130a22; --bg3:#210f3c; 
+      --card:#ffffff0f; --text:#e9f1ff; --muted:#c0c9dacc; --glow:#ffffffc9;
+    }
     body{
-      font-family:"Segoe UI",Tahoma,Arial,sans-serif; display:flex; align-items:center; justify-content:center;
+      font-family:"Segoe UI",Tahoma,Arial,sans-serif; 
+      display:flex; align-items:center; justify-content:center; flex-direction:column;
       min-height:100vh; margin:0; padding:24px; box-sizing:border-box;
       background: radial-gradient(900px 700px at 20% -10%, #2a1455 0%, transparent 60%),
                   radial-gradient(900px 700px at 110% 120%, #3b1b6a 0%, transparent 55%),
@@ -26,6 +30,20 @@
     .badge{ display:inline-block; font-size:12px; padding:6px 12px; border-radius:999px; margin-bottom:12px; direction:ltr; border:1px solid #ffffff25; opacity:.96; }
     .badge-tips{ background:linear-gradient(180deg,#0f2748,#173a66); color:#d8ecff; box-shadow:0 0 16px 2px #69d6ff66, 0 2px 6px rgba(0,0,0,.4); }
     .badge-fields{ background:linear-gradient(180deg,#240d3e,#331657); color:#efd8ff; box-shadow:0 0 16px 2px #c28bff66, 0 2px 6px rgba(0,0,0,.4); }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #c6a3ff;
+      opacity: 0.9;
+      text-shadow: 0 0 12px #b689ff80;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 8px #b689ff40; opacity: 0.8; }
+      to { text-shadow: 0 0 18px #d8b3ffb3; opacity: 1; }
+    }
+
     @media(max-width:520px){ .card{padding:30px 18px} .fact{font-size:19px; min-height:92px} h1{font-size:22px} }
   </style>
 </head>
@@ -36,6 +54,8 @@
     <p id="fact" class="fact">Loading…</p>
     <div class="meta">يتجدد المحتوى تلقائيًا كل <strong>10 ثوانٍ</strong></div>
   </div>
+
+  <footer>Made with 💜 by <strong>Renad Alshibl</strong></footer>
 
   <script>
     function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
@@ -118,8 +138,6 @@
   </script>
 </body>
 </html>
-
-
 
 
 
