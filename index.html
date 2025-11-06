@@ -1,86 +1,212 @@
-<script>
-  function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));}
-  function wrapLatin(s){return s.replace(/([A-Za-z][A-Za-z0-9+\-./#\s]*[A-Za-z0-9])/g,'<bdi dir="ltr">$1</bdi>');}
-  function fmt(s){return wrapLatin(escapeHTML(s));}
-  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-
-  const tipsData = [
-    "استخدم كلمات مرور طويلة وفريدة لكل حساب",
-    "فعّل التحقق بخطوتين لحماية حساباتك من الاختراق",
-    "لا تضغط على روابط مشبوهة تصل عبر البريد أو الرسائل",
-    "تأكّد أن عنوان الموقع يبدأ بـ https قبل إدخال بياناتك",
-    "حدّث نظامك وبرامجك بانتظام لتفادي الثغرات الأمنية",
-    "لا تشارك رموز التحقق المؤقتة OTP مع أي شخص",
-    "استخدم تطبيقًا موثوقًا لحفظ كلمات المرور بأمان",
-    "خذ نسخة احتياطية لملفاتك المهمة في أكثر من مكان",
-    "لا تستخدم شبكة Wi-Fi العامة لإجراء عمليات حساسة مثل التحويلات البنكية",
-    "افصل البلوتوث والمشاركة التلقائية عند عدم الحاجة",
-    "راقب إشعارات البنك والبريد لأي نشاط غير معتاد",
-    "لا تنشر معلوماتك الشخصية أو صورك الخاصة في العلن",
-    "ثبّت التطبيقات من المتاجر الرسمية فقط",
-    "راجع صلاحيات التطبيقات باستمرار واسمح بما تحتاجه فقط",
-    "لا تفتح المرفقات من مصادر مجهولة",
-    "استخدم بريدًا إلكترونيًا مختلفًا لحساباتك المهمة",
-    "قبل بيع جهازك احذف بياناتك نهائيًا وأعد ضبط المصنع",
-    "فعّل قفل الشاشة والتشفير في الهاتف أو الحاسوب",
-    "عند استخدام أجهزة عامة لا تحفظ كلمات مرورك عليها",
-    "تذكّر أن الوعي الأمني هو خط الدفاع الأول ضد أي هجوم"
-  ];
-
-  const fieldsData = [
-    "🔐 Cybersecurity: علم يهدف إلى حماية الأنظمة والبيانات من الهجمات الرقمية",
-    "🔐 SOC: فريق يراقب التهديدات ويستجيب للحوادث الأمنية",
-    "🔐 GRC: إدارة السياسات والمخاطر والالتزام بالمعايير",
-    "🔐 Blue Team: الجهة المسؤولة عن الدفاع والمراقبة وحماية الأنظمة",
-    "🔐 Red Team: فريق يحاكي المهاجمين لاختبار قوة الدفاعات",
-    "🔐 Penetration Testing: اختبار اختراق لتحديد الثغرات قبل استغلالها",
-    "🔐 Digital Forensics: تحليل الهجمات وجمع الأدلة بعد الحوادث",
-    "🔐 Security Architecture: تصميم شبكات وأنظمة بمتطلبات أمان واضحة",
-    "🔐 Cloud Security: تأمين البيانات والخدمات في السحابة مثل AWS و Azure",
-    "🔐 AppSec: حماية تطبيقات الويب والجوال من الثغرات البرمجية"
-  ];
-
-  function buildPlaylist(){
-    const t = shuffle(tipsData.slice());
-    const f = shuffle(fieldsData.slice());
-    const out = [];
-    let i=0,j=0;
-    while(i<t.length || j<f.length){
-      for(let k=0;k<2 && i<t.length;k++) out.push({type:'tips',text:t[i++]});
-      if(j<f.length) out.push({type:'fields',text:f[j++]});
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cyber Tips & Basics</title>
+  <style>
+    :root {
+      --bg1: #08060b;
+      --bg2: #130a22;
+      --bg3: #210f3c;
+      --card: #ffffff0f;
+      --text: #e9f1ff;
+      --muted: #c0c9dacc;
+      --glow: #ffffffc9;
     }
-    return out;
-  }
 
-  let playlist = buildPlaylist();
-  let ptr = -1;
-
-  const factEl = document.getElementById('fact');
-  const badgeEl = document.getElementById('badge');
-
-  function render(item){
-    if(item.type==='tips'){ badgeEl.textContent='💡 Cyber Tips'; badgeEl.className='badge badge-tips'; }
-    else{ badgeEl.textContent='🔐 Cyber Fields'; badgeEl.className='badge badge-fields'; }
-    factEl.innerHTML = fmt(item.text);
-  }
-
-  function nextItem(){
-    ptr++;
-    if(ptr >= playlist.length){
-      playlist = buildPlaylist();
-      ptr = 0;
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      box-sizing: border-box;
+      background: radial-gradient(900px 700px at 20% -10%, #2a1455 0%, transparent 60%),
+                  radial-gradient(900px 700px at 110% 120%, #3b1b6a 0%, transparent 55%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+      color: var(--text);
     }
-    return playlist[ptr];
-  }
 
-  function showNext(){
-    factEl.classList.add('fade-out'); badgeEl.classList.add('fade-out');
-    setTimeout(()=>{ render(nextItem()); factEl.classList.remove('fade-out'); badgeEl.classList.remove('fade-out'); },550);
-  }
+    .card {
+      width: min(880px, 96%);
+      background: var(--card);
+      border: 1px solid #ffffff14;
+      border-radius: 20px;
+      padding: 40px 30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 80px 14px #7f49ff12 inset;
+      text-align: center;
+    }
 
-  render(nextItem());
-  setInterval(showNext,10000);
-</script>
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 26px;
+      letter-spacing: 0.3px;
+      text-shadow: 0 0 12px var(--glow), 0 0 26px #b1f1ff40;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .fact {
+      font-size: 22px;
+      line-height: 1.9;
+      margin: 18px 0 0;
+      min-height: 104px;
+      transition: opacity 0.55s ease, transform 0.55s ease;
+      opacity: 1;
+      text-align: center;
+      direction: rtl;
+      unicode-bidi: plaintext;
+      text-shadow: 0 0 12px #ffffff1f;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      direction: ltr;
+      border: 1px solid #ffffff25;
+      opacity: 0.96;
+    }
+
+    .badge-tips {
+      background: linear-gradient(180deg, #0f2748, #173a66);
+      color: #d8ecff;
+      box-shadow: 0 0 16px 2px #69d6ff66, 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .badge-fields {
+      background: linear-gradient(180deg, #240d3e, #331657);
+      color: #efd8ff;
+      box-shadow: 0 0 16px 2px #c28bff66, 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        padding: 30px 18px;
+      }
+      .fact {
+        font-size: 19px;
+        min-height: 92px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-live="polite">
+    <h1>Cyber Tips & Basics</h1>
+    <div id="badge" class="badge badge-tips">💡 Cyber Tips</div>
+    <p id="fact" class="fact">Loading…</p>
+    <div class="meta">يتجدد المحتوى تلقائيًا كل <strong>10 ثوانٍ</strong></div>
+  </div>
+
+  <script>
+    function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+    function wrapLatin(s){return s.replace(/([A-Za-z][A-Za-z0-9+\-./#\s]*[A-Za-z0-9])/g,'<bdi dir="ltr">$1</bdi>');}
+    function fmt(s){return wrapLatin(escapeHTML(s));}
+    function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+    const tipsData = [
+      "استخدم كلمات مرور طويلة وفريدة لكل حساب",
+      "فعّل التحقق بخطوتين لحماية حساباتك من الاختراق",
+      "لا تضغط على روابط مشبوهة تصل عبر البريد أو الرسائل",
+      "تأكّد أن عنوان الموقع يبدأ بـ https قبل إدخال بياناتك",
+      "حدّث نظامك وبرامجك بانتظام لتفادي الثغرات الأمنية",
+      "لا تشارك رموز التحقق المؤقتة OTP مع أي شخص",
+      "استخدم تطبيقًا موثوقًا لحفظ كلمات المرور بأمان",
+      "خذ نسخة احتياطية لملفاتك المهمة في أكثر من مكان",
+      "لا تستخدم شبكة Wi-Fi العامة لإجراء عمليات حساسة مثل التحويلات البنكية",
+      "افصل البلوتوث والمشاركة التلقائية عند عدم الحاجة",
+      "راقب إشعارات البنك والبريد لأي نشاط غير معتاد",
+      "لا تنشر معلوماتك الشخصية أو صورك الخاصة في العلن",
+      "ثبّت التطبيقات من المتاجر الرسمية فقط",
+      "راجع صلاحيات التطبيقات باستمرار واسمح بما تحتاجه فقط",
+      "لا تفتح المرفقات من مصادر مجهولة",
+      "استخدم بريدًا إلكترونيًا مختلفًا لحساباتك المهمة",
+      "قبل بيع جهازك احذف بياناتك نهائيًا وأعد ضبط المصنع",
+      "فعّل قفل الشاشة والتشفير في الهاتف أو الحاسوب",
+      "عند استخدام أجهزة عامة لا تحفظ كلمات مرورك عليها",
+      "تذكّر أن الوعي الأمني هو خط الدفاع الأول ضد أي هجوم"
+    ];
+
+    const fieldsData = [
+      "🔐 Cybersecurity: علم يهدف إلى حماية الأنظمة والبيانات من الهجمات الرقمية",
+      "🔐 SOC: فريق يراقب التهديدات ويستجيب للحوادث الأمنية",
+      "🔐 GRC: إدارة السياسات والمخاطر والالتزام بالمعايير",
+      "🔐 Blue Team: الجهة المسؤولة عن الدفاع والمراقبة وحماية الأنظمة",
+      "🔐 Red Team: فريق يحاكي المهاجمين لاختبار قوة الدفاعات",
+      "🔐 Penetration Testing: اختبار اختراق لتحديد الثغرات قبل استغلالها",
+      "🔐 Digital Forensics: تحليل الهجمات وجمع الأدلة بعد الحوادث",
+      "🔐 Security Architecture: تصميم شبكات وأنظمة بمتطلبات أمان واضحة",
+      "🔐 Cloud Security: تأمين البيانات والخدمات في السحابة مثل AWS و Azure",
+      "🔐 AppSec: حماية تطبيقات الويب والجوال من الثغرات البرمجية"
+    ];
+
+    function buildPlaylist(){
+      const t = shuffle(tipsData.slice());
+      const f = shuffle(fieldsData.slice());
+      const out = [];
+      let i=0,j=0;
+      while(i<t.length || j<f.length){
+        for(let k=0;k<2 && i<t.length;k++) out.push({type:'tips',text:t[i++]});
+        if(j<f.length) out.push({type:'fields',text:f[j++]});
+      }
+      return out;
+    }
+
+    let playlist = buildPlaylist();
+    let ptr = -1;
+
+    const factEl = document.getElementById('fact');
+    const badgeEl = document.getElementById('badge');
+
+    function render(item){
+      if(item.type==='tips'){ badgeEl.textContent='💡 Cyber Tips'; badgeEl.className='badge badge-tips'; }
+      else{ badgeEl.textContent='🔐 Cyber Fields'; badgeEl.className='badge badge-fields'; }
+      factEl.innerHTML = fmt(item.text);
+    }
+
+    function nextItem(){
+      ptr++;
+      if(ptr >= playlist.length){
+        playlist = buildPlaylist();
+        ptr = 0;
+      }
+      return playlist[ptr];
+    }
+
+    function showNext(){
+      factEl.classList.add('fade-out');
+      badgeEl.classList.add('fade-out');
+      setTimeout(()=>{
+        render(nextItem());
+        factEl.classList.remove('fade-out');
+        badgeEl.classList.remove('fade-out');
+      },550);
+    }
+
+    render(nextItem());
+    setInterval(showNext,10000);
+  </script>
+</body>
+</html>
 
 
 
