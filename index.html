@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>حقائق سايبر عشوائية — يتحدث كل 15 ثانية</title>
+  <style>
+    body{
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      margin:0;
+      background:linear-gradient(180deg,#0b0f1a,#071026);
+      color:#e6eef8;
+      padding:20px;
+      box-sizing:border-box;
+    }
+    .card{
+      width:min(760px,95%);
+      background:rgba(255,255,255,0.03);
+      border-radius:12px;
+      padding:28px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.6);
+      text-align:right;
+    }
+    h1{ margin:0 0 10px 0; font-size:20px; }
+    p.fact{
+      font-size:18px;
+      line-height:1.5;
+      margin:16px 0 0;
+      min-height:72px;
+      transition:opacity .6s ease, transform .6s ease;
+      opacity:1;
+    }
+    .meta{ font-size:13px; color:rgba(255,255,255,0.6); margin-top:12px;}
+    .fade-out{ opacity:0; transform:translateY(-6px); }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-live="polite">
+    <h1>معلومات سَايبِر عشوائية</h1>
+    <p id="fact" class="fact">جاري التحميل...</p>
+    <div class="meta">تتحدّث كل <strong>15 ثانية</strong>. امسح كود الـ QR لفتح هذه الصفحة.</div>
+  </div>
+
+  <script>
+    const facts = [
+      "أكثر هجوم سيبراني شائع هو هجوم الهندسة الاجتماعية (Social Engineering).",
+      "الـ Ransomware يقوم بتشفير ملفات الضحية ثم يطلب فدية لفك التشفير.",
+      "تحديثات النظام تقلل من فرص استغلال الثغرات.",
+      "استخدام المصادقة الثنائية (2FA) يقلل كثيرًا من خطر سرقة الحساب.",
+      "هجمات الـ Phishing تستخدم رسائل تبدو رسمية لخداع المستخدم.",
+      "شبكات الواي-فاي العامة غير الآمنة قد تسمح للمهاجمين بالتنصت على بياناتك.",
+      "تسجيل الدخول المتكرر من أماكن مختلفة قد يكون علامة على حساب مخترق.",
+      "النسخ الاحتياطية المنتظمة تقلل الخسائر عند هجمات الفدية.",
+      "فحص الروابط قبل الضغط عليها يساعد في كشف الروابط المزيفة.",
+      "تشفير الاتصالات عبر HTTPS يمنع التنصت على البيانات أثناء النقل."
+    ];
+
+    let currentIndex = -1;
+    const factEl = document.getElementById('fact');
+
+    function showRandomFact() {
+      let next;
+      if (facts.length === 1) next = 0;
+      else {
+        do {
+          next = Math.floor(Math.random() * facts.length);
+        } while (next === currentIndex);
+      }
+      currentIndex = next;
+      factEl.classList.add('fade-out');
+      setTimeout(() => {
+        factEl.textContent = facts[currentIndex];
+        factEl.classList.remove('fade-out');
+      }, 600);
+    }
+
+    function init() {
+      showRandomFact();
+      setInterval(showRandomFact, 15000);
+    }
+    init();
+  </script>
+</body>
+</html>
