@@ -6,52 +6,178 @@
   <title>Cyber Tips & Fields</title>
   <style>
     :root { 
-      --bg1:#08060b; --bg2:#130a22; --bg3:#210f3c; 
-      --card:#ffffff0f; --text:#e9f1ff; --muted:#c0c9dacc; --glow:#ffffffc9;
+      --bg1:#05030b;
+      --bg2:#130a22;
+      --bg3:#221038;
+      --card:#ffffff08;
+      --card-border:#ffffff12;
+      --text:#e9f1ff;
+      --muted:#c0c9dacc;
+      --accent:#69d6ff;
+      --accent-soft:#b389ff;
     }
+
     body{
       font-family:"Segoe UI",Tahoma,Arial,sans-serif; 
-      display:flex; align-items:center; justify-content:center; flex-direction:column;
-      min-height:100vh; margin:0; padding:24px; box-sizing:border-box;
-      background: radial-gradient(900px 700px at 20% -10%, #2a1455 0%, transparent 60%),
-                  radial-gradient(900px 700px at 110% 120%, #3b1b6a 0%, transparent 55%),
-                  linear-gradient(160deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      min-height:100vh;
+      margin:0;
+      padding:24px;
+      box-sizing:border-box;
+      background:
+        radial-gradient(900px 700px at 20% -10%, #2a1455 0%, transparent 60%),
+        radial-gradient(900px 700px at 110% 120%, #3b1b6a 0%, transparent 55%),
+        linear-gradient(160deg, var(--bg1), var(--bg2) 52%, var(--bg3));
       color:var(--text);
     }
-    .card{ width:min(880px,96%); background:var(--card); border:1px solid #ffffff14; border-radius:20px;
-      padding:40px 30px; backdrop-filter: blur(8px); text-align:center;
-      box-shadow:0 20px 50px rgba(0,0,0,.6), 0 0 80px 14px #7f49ff12 inset;
-    }
-    h1{ margin:0 0 8px 0; font-size:28px; letter-spacing:.5px; text-shadow:0 0 16px var(--glow), 0 0 26px #b1f1ff40; }
-    .meta{ font-size:13px; color:var(--muted); margin-top:14px; }
-    .fact{ font-size:22px; line-height:1.9; margin:18px 0 0; min-height:104px; opacity:1;
-      transition:opacity .55s ease, transform .55s ease; text-align:center; direction:rtl; unicode-bidi:plaintext; text-shadow:0 0 12px #ffffff1f; }
-    .fade-out{ opacity:0; transform:translateY(-6px); }
-    .badge{ display:inline-block; font-size:12px; padding:6px 12px; border-radius:999px; margin-bottom:12px; direction:ltr; border:1px solid #ffffff25; opacity:.96; }
-    .badge-tips{ background:linear-gradient(180deg,#0f2748,#173a66); color:#d8ecff; box-shadow:0 0 16px 2px #69d6ff66, 0 2px 6px rgba(0,0,0,.4); }
-    .badge-fields{ background:linear-gradient(180deg,#240d3e,#331657); color:#efd8ff; box-shadow:0 0 16px 2px #c28bff66, 0 2px 6px rgba(0,0,0,.4); }
 
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #cbb8ff;
-      opacity: 0.9;
-      text-shadow: 0 0 12px #b689ff60;
-      text-align: center;
-      animation: fadeIn 2s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .card{
+      width:min(880px,96%);
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:26px;
+      padding:46px 34px 34px;
+      backdrop-filter: blur(14px);
+      text-align:center;
+      box-shadow:
+        0 22px 55px rgba(0,0,0,.78),
+        0 0 40px rgba(102,72,255,0.18),
+        0 -2px 18px rgba(143,101,255,0.22) inset;
+      position:relative;
+      overflow:hidden;
+      animation: cardGlow 6s ease-in-out infinite alternate;
     }
 
-    @media(max-width:520px){ .card{padding:30px 18px} .fact{font-size:19px; min-height:92px} h1{font-size:24px} }
+    /* لمسة هالة خفيفة أعلى الكارد */
+    .card::before{
+      content:"";
+      position:absolute;
+      top:-40px;
+      left:50%;
+      transform:translateX(-50%);
+      width:40%;
+      height:80px;
+      background:radial-gradient(circle at 50% 100%, rgba(179,137,255,0.25), transparent);
+      opacity:.85;
+      pointer-events:none;
+    }
+
+    h1{
+      margin:0 0 14px 0;
+      font-size:32px;
+      letter-spacing:.6px;
+      font-weight:700;
+      background:linear-gradient(90deg,#ffffff,#d3b8ff,#9ad4ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 18px rgba(152,109,255,0.45);
+    }
+
+    .meta{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:16px;
+    }
+
+    .fact{
+      font-size:22px;
+      line-height:1.9;
+      margin:22px 0 0;
+      min-height:104px;
+      opacity:1;
+      transition:opacity .55s ease, transform .55s ease;
+      text-align:center;
+      direction:rtl;
+      unicode-bidi:plaintext;
+      text-shadow:0 0 10px #00000066;
+    }
+
+    .fade-out{
+      opacity:0;
+      transform:translateY(-8px);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      font-size:12px;
+      padding:7px 18px;
+      border-radius:999px;
+      margin-bottom:4px;
+      direction:ltr;
+      border:1px solid #ffffff26;
+      background:radial-gradient(circle at 0 0, rgba(255,255,255,0.12), transparent),
+                 linear-gradient(180deg,#10182c,#141f35);
+      color:#d8ecff;
+      box-shadow:0 0 14px rgba(105,214,255,0.35);
+      backdrop-filter:blur(10px);
+      transition:all .35s ease;
+    }
+
+    .badge-fields{
+      background:radial-gradient(circle at 0 0, rgba(255,255,255,0.10), transparent),
+                 linear-gradient(180deg,#1d0b30,#2b1348);
+      color:#efd8ff;
+      box-shadow:0 0 14px rgba(194,139,255,0.35);
+    }
+
+    .badge span{
+      font-size:11px;
+      opacity:.9;
+    }
+
+    footer{
+      margin-top:26px;
+      font-size:12px;
+      color:#cbb8ff;
+      opacity:0.9;
+      text-shadow:0 0 10px #7d5cff70;
+      text-align:center;
+      animation: fadeIn 1.8s ease-in-out;
+    }
+
+    footer strong{
+      font-weight:600;
+      color:#ffffff;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(10px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    @keyframes cardGlow{
+      from{
+        box-shadow:
+          0 22px 55px rgba(0,0,0,.8),
+          0 0 26px rgba(102,72,255,0.14),
+          0 -2px 14px rgba(143,101,255,0.18) inset;
+      }
+      to{
+        box-shadow:
+          0 26px 60px rgba(0,0,0,.86),
+          0 0 40px rgba(132,202,255,0.22),
+          0 -3px 20px rgba(190,150,255,0.26) inset;
+      }
+    }
+
+    @media(max-width:520px){
+      .card{padding:32px 18px 24px;}
+      h1{font-size:24px;}
+      .fact{font-size:19px; min-height:92px;}
+      footer{font-size:11px;}
+    }
   </style>
 </head>
 <body>
   <div class="card" role="main" aria-live="polite">
     <h1>Cyber Tips & Fields</h1>
-    <div id="badge" class="badge badge-tips">💡 Cyber Tips</div>
+    <div id="badge" class="badge"><span>💡 Cyber Tips</span></div>
     <p id="fact" class="fact">Loading…</p>
     <div class="meta">يتجدد المحتوى تلقائيًا كل <strong>5 ثوانٍ</strong></div>
   </div>
@@ -59,10 +185,23 @@
   <footer>Developed by <strong>Renad Alshibl © 2025</strong></footer>
 
   <script>
-    function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-    function wrapLatin(s){return s.replace(/([A-Za-z][A-Za-z0-9+\-./#\s]*[A-Za-z0-9])/g,'<bdi dir="ltr">$1</bdi>');}
-    function fmt(s){return wrapLatin(escapeHTML(s));}
-    function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+    function escapeHTML(s){
+      return s.replace(/[&<>"']/g, m => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[m]));
+    }
+    function wrapLatin(s){
+      return s.replace(/([A-Za-z][A-Za-z0-9+\-./#\s]*[A-Za-z0-9])/g,
+        '<bdi dir="ltr">$1</bdi>');
+    }
+    function fmt(s){ return wrapLatin(escapeHTML(s)); }
+    function shuffle(a){
+      for(let i=a.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [a[i],a[j]]=[a[j],a[i]];
+      }
+      return a;
+    }
 
     const tipsData = [
       "استخدم كلمات مرور طويلة وفريدة لكل حساب",
@@ -103,10 +242,11 @@
     function buildPlaylist(){
       const t = shuffle(tipsData.slice());
       const f = shuffle(fieldsData.slice());
-      const out = []; let i=0, j=0;
+      const out = [];
+      let i=0, j=0;
       while(i<t.length || j<f.length){
-        for(let k=0;k<2 && i<t.length;k++) out.push({type:'tips',text:t[i++]});
-        if(j<f.length) out.push({type:'fields',text:f[j++]});
+        for(let k=0;k<2 && i<t.length;k++) out.push({type:'tips', text:t[i++]});
+        if(j<f.length) out.push({type:'fields', text:f[j++]});
       }
       return out;
     }
@@ -118,27 +258,41 @@
     const badgeEl = document.getElementById('badge');
 
     function render(item){
-      if(item.type==='tips'){ badgeEl.textContent='💡 Cyber Tips'; badgeEl.className='badge badge-tips'; }
-      else{ badgeEl.textContent='🔐 Cyber Fields'; badgeEl.className='badge badge-fields'; }
+      if(item.type === 'tips'){
+        badgeEl.className = 'badge';
+        badgeEl.innerHTML = '<span>💡 Cyber Tips</span>';
+      } else {
+        badgeEl.className = 'badge badge-fields';
+        badgeEl.innerHTML = '<span>🔐 Cyber Fields</span>';
+      }
       factEl.innerHTML = fmt(item.text);
     }
 
     function nextItem(){
       ptr++;
-      if(ptr >= playlist.length){ playlist = buildPlaylist(); ptr = 0; }
+      if(ptr >= playlist.length){
+        playlist = buildPlaylist();
+        ptr = 0;
+      }
       return playlist[ptr];
     }
 
     function showNext(){
-      factEl.classList.add('fade-out'); badgeEl.classList.add('fade-out');
-      setTimeout(()=>{ render(nextItem()); factEl.classList.remove('fade-out'); badgeEl.classList.remove('fade-out'); }, 550);
+      factEl.classList.add('fade-out');
+      badgeEl.classList.add('fade-out');
+      setTimeout(() => {
+        render(nextItem());
+        factEl.classList.remove('fade-out');
+        badgeEl.classList.remove('fade-out');
+      }, 550);
     }
 
     render(nextItem());
-    setInterval(showNext, 5000); // ← التبديل كل 5 ثوانٍ
+    setInterval(showNext, 5000);
   </script>
 </body>
 </html>
+
 
 
 
